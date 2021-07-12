@@ -6,6 +6,7 @@ import webbrowser as wb
 import os
 import pyautogui
 import pyjokes
+import pyaudiot
 
 engine = pyttsx3.init()
 
@@ -54,22 +55,22 @@ def wishme():
 
 def takeCommand():
     r = sr.Recognizer()
-    with sr.Microphone() as source:
+     
+    with sr.Microphone(device_index=0) as source:
+         
         print("Listening...")
-        r.pause_threshold = 1
         audio = r.listen(source)
-
     try:
-        print("Recognizing...")
-        query = r.recognize_google(audio, language='en-in')
-        print(query)  
+        print("Recognizing...")   
+        query = r.recognize_google(audio, language ='en-in')
+        print(f"User said: {query}\n")
+  
     except Exception as e:
-        print(e)
-        speak("Sorry I couldn't get It...")
-        
+        print(e)   
+        print("Unable to Recognize your voice.") 
         return "None"
-
-    return query  
+     
+    return query
 
 def screenshot():
     img = pyautogui.screenshot()
@@ -121,5 +122,3 @@ if __name__ == "__main__":
 
         elif 'offline' in query:
             exit(0)
-
-    
